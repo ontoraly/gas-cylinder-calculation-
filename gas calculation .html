@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>    </title>
+    
+    <!-- Google Fonts: Poppins & Hind Siliguri -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome v6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #0ea5e9;
+            --primary-dark: #0284c7;
+            --secondary: #f97316;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #0f172a;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 10px 10px -5px rgba(15, 23, 42, 0.04);
+            --radius: 12px;
+            --radius-sm: 8px;
+            --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body {
+            font-family: 'Hind Siliguri', 'Poppins', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container { padding: 16px; max-width: 1400px; margin: 0 auto; }
+        
+        .card { 
+            background: var(--card-bg); 
+            border-radius: var(--radius); 
+            padding: 20px; 
+            box-shadow: var(--shadow); 
+            margin-bottom: 20px; 
+            border: 1px solid var(--border); 
+            transition: var(--transition);
+        }
+        
+        .hidden { display: none !important; }
+        .text-center { text-align: center; }
+        .text-success { color: var(--success) !important; font-weight: 600; }
+        .text-danger { color: var(--danger) !important; font-weight: 600; }
+        .text-warning { color: var(--warning) !important; font-weight: 600; }
+        
+        .app-header {
+            background: #1e293b;
+            padding: 14px 20px;
+            color: #f8fafc;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #334155;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .app-header .logo { font-size: 1.2rem; display: flex; align-items: center; justify-content: center; color: var(--primary); width: 36px; height: 36px; background: rgba(255, 255, 255, 0.06); border-radius: 8px; }
+        
+        .header-profile-zone { display: flex; align-items: center; gap: 12px; }
+        
+        .app-shell-layout { display: flex; min-height: calc(100vh - 65px); }
+        
+        .nav-side-bar { 
+            width: 260px; 
+            background: #1e293b; 
+            color: #94a3b8; 
+            display: flex; 
+            flex-direction: column; 
+            padding: 20px 12px;
+            gap: 6px;
+            border-right: 1px solid #334155;
+        }
+        .nav-side-bar a { 
+            padding: 12px 16px; 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            font-weight: 500; 
+            text-decoration: none; 
+            color: #94a3b8; 
+            border-radius: var(--radius-sm);
+            transition: var(--transition); 
+        }
+        .nav-side-bar a i { font-size: 1rem; width: 20px; text-align: center; }
+        .nav-side-bar a:hover { background: #273549; color: white; }
+        .nav-side-bar a.active { background: var(--primary); color: white; font-weight: 600; }
+        
+        .main-viewport { flex: 1; padding: 24px; background: #f8fafc; overflow-x: hidden; }
+        
+        .mobile-tabs { display: none; }
+
+        /*    */
+        .grid { display: grid; gap: 16px; }
+        .grid-2 { grid-template-columns: repeat(2, 1fr); }
+        .grid-3 { grid-template-columns: repeat(3, 1fr); }
+        .grid-4 { grid-template-columns: repeat(4, 1fr); }
+        .grid-6 { grid-template-columns: repeat(3, 1fr); }
+        
+        @media (max-width: 992px) {
+            body { padding-bottom: 70px; }
+            .app-shell-layout { flex-direction: column; }
+            .nav-side-bar { display: none; }
+            .main-viewport { padding: 16px; }
+            .grid-6 { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            
+            .mobile-tabs { 
+                display: flex; 
+                position: fixed;
+                bottom: 0; left: 0; right: 0;
+                background: #1e293b; 
+                padding: 6px 4px; 
+                justify-content: space-around;
+                box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+                z-index: 999;
+                border-top: 1px solid #334155;
+            }
+            .mobile-tabs a { 
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 4px;
+                color: #94a3b8; 
+                text-decoration: none; 
+                font-size: 0.75rem; 
+                padding: 8px 4px;
+                flex: 1;
+                text-align: center;
+                border-radius: var(--radius-sm);
+            }
+            .mobile-tabs a i { font-size: 1.1rem; }
+            .mobile-tabs a.active { color: var(--primary); font-weight: 600; }
+        }
+        
+        @media (max-width: 600px) { 
+            .grid-4, .grid-2, .grid-3 { grid-template-columns: 1fr; } 
+            .grid-6 { grid-template-columns: repeat(2, 1fr) !important; gap: 8px !important; }
+            .grid-6 .card { padding: 12px 8px !important; }
+            .grid-6 .stat-card-wrapper { flex-direction: column; text-align: center; gap: 6px; }
+            .grid-6 .stat-icon-box { margin: 0 auto; width: 38px; height: 38px; font-size: 1.1rem; }
+            .grid-6 h2 { font-size: 1.1rem !important; }
+        }
+        
+        .stat-card-wrapper { display: flex; align-items: center; gap: 16px; }
+        .stat-icon-box {
+            width: 46px; height: 46px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.25rem; flex-shrink: 0;
+        }
+        
+        .form-group { margin-bottom: 14px; }
+        .form-group label { display: block; margin-bottom: 6px; font-size: 0.85rem; color: var(--text-light); font-weight: 600; }
+        .input, select, textarea {
+            width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius-sm);
+            font-family: inherit; font-size: 0.92rem; background: #fff; color: var(--text);
+            transition: var(--transition);
+        }
+        .input:focus, select:focus, textarea:focus { 
+            border-color: var(--primary); outline: none; 
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.12);
+        }
+        
+        .btn { 
+            padding: 10px 16px; border-radius: var(--radius-sm); font-weight: 600; font-family: inherit; 
+            cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; 
+            justify-content: center; gap: 6px; width: 100%; border: none; font-size: 0.92rem;
+        }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-dark); }
+        .btn-success { background: var(--success); color: white; }
+        .btn-success:hover { background: #059669; }
+        .btn-danger { background: var(--danger); color: white; }
+        .btn-danger:hover { background: #dc2626; }
+        .btn-warning { background: var(--warning); color: white; }
+        .btn-warning:hover { background: #d97706; }
+        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+        .btn-outline:hover { background: #f1f5f9; }
+        .btn:active { transform: scale(0.98); }
+
+        .badge { padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; display: inline-block; }
+        .badge-success { background: #ecfdf5; color: #059669; }
+        .badge-danger { background: #fef2f2; color: #dc2626; }
+        .badge-warning { background: #fffbeb; color: #d97706; }
+        .badge-info { background: #f0f9ff; color: #0369a1; }
+
+        .table-container { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius-sm); background: white; }
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th, td { padding: 12px 14px; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+        th { background: #f8fafc; color: #475569; font-weight: 600; font-size: 0.8rem; letter-spacing: 0.5px; }
+        tr:last-child td { border-bottom: none; }
+
+        @media (max-width: 768px) {
+            .responsive-m-table table, .responsive-m-table thead, .responsive-m-table tbody, .responsive-m-table th, .responsive-m-table td, .responsive-m-table tr { display: block; }
+            .responsive-m-table thead { display: none; }
+            .responsive-m-table tr { background: white; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px; margin-bottom: 10px; }
+            .responsive-m-table td { padding: 6px 0; border-bottom: 1px dashed #f1f5f9; display: flex; justify-content: space-between; align-items: center; font-size: 0.88rem; }
+            .responsive-m-table td:last-child { border-bottom: none; justify-content: flex-end; gap: 8px; margin-top: 8px; padding-top: 8px; border-top: 1px solid #e2e8f0; }
+            .responsive-m-table td::before { content: attr(data-label); font-weight: 600; color: var(--text-light); font-size: 0.8rem; }
+        }
+
+        .pos-workbench-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 20px; }
+        @media (max-width: 1100px) { .pos-workbench-grid { grid-template-columns: 1fr; } }
+        .cart-list { max-height: 240px; overflow-y: auto; margin-bottom: 12px; }
+        .cart-item { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 10px 12px; border-radius: var(--radius-sm); border: 1px solid var(--border);
+            margin-bottom: 6px; background: #f8fafc;
+        }
+
+        .modal-mask { 
+            position: fixed; inset: 0; background: rgba(15, 23, 42, 0.4); 
+            display: flex; align-items: center; justify-content: center; z-index: 2000; 
+            padding: 16px; backdrop-filter: blur(4px); animation: fadeIn 0.2s ease;
+        }
+        .modal-box { 
+            background: white; border-radius: var(--radius); width: 100%; max-width: 500px; 
+            max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg);
+            animation: slideUp 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .modal-head { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .modal-head h4 { font-size: 1.05rem; font-weight: 700; }
+        .modal-body { padding: 20px; }
+        
+        #toast-box { position: fixed; top: 16px; right: 16px; z-index: 9999; display: flex; flex-direction: column; gap: 8px; max-width: calc(100vw - 32px); }
+        .toast { 
+            background: #1e293b; color: white; padding: 12px 18px; border-radius: var(--radius-sm); 
+            box-shadow: var(--shadow-lg); font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 8px;
+            animation: slideLeft 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .toast.success { background: #10b981; }
+        .toast.error { background: #ef4444; }
+        .toast.info { background: #0ea5e9; }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(12px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes slideLeft { from { transform: translateX(30px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+        @media print {
+            body * { display: none !important; }
+            #printable-area, #printable-area * { display: block !important; color: #000 !important; background: transparent !important; }
+            #printable-area { position: absolute; left: 0; top: 0; width: 100%; padding: 0; }
+            #printable-area table { width: 100% !important; border-collapse: collapse !important; }
+            #printable-area th, #printable-area td { border-bottom: 1px dashed #000 !important; padding: 4px !important; font-size: 12px !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app-shell"></div>
+    <div id="modal-mount"></div>
+    <div id="toast-box"></div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+        import { getFirestore, collection, doc, addDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy, writeBatch, increment, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB57lkViSAc1UwyIjQf9nVI_5FuwSnXU-k",
+            authDomain: "taka-inkam-2026.firebaseapp.com",
+            projectId: "taka-inkam-2026",
+            storageBucket: "taka-inkam-2026.firebasestorage.app",
+            messagingSenderId: "497732912229",
+            appId: "1:497732912229:web:b9e246adcd28b94486328c",
+            measurementId: "G-17P84RG1XE"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        enableIndexedDbPersistence(db).catch((err) => {
+            if (err.code == 'failed-precondition') {
+                console.warn("  :    ");
+            } else if (err.code == 'unimplemented') {
+                console.error("      ");
+            }
+        });
+
+        const state = {
+            user: null,
+            products: [],    
+            customers: [],   
+            transactions: [],
+            cart: [],
+            currentRoute: window.location.hash || '#dashboard'
+        };
+
+        function formatDate(dateField) {
+            if(!dateField) return 'N/A';
+            let d = (typeof dateField.toDate === 'function') ? dateField.toDate() : (dateField.seconds ? new Date(dateField.seconds * 1000) : new Date(dateField));
+            return d.toLocaleDateString('bn-BD');
+        }
+
+        window.toast = (msg, type = 'success') => {
+            const box = document.getElementById('toast-box');
+            if(!box) return;
+            const el = document.createElement('div');
+            el.className = `toast ${type}`;
+            let icon = type === 'success' ? '<i class="fas fa-check-circle"></i>' : (type === 'error' ? '<i class="fas fa-exclamation-circle"></i>' : '<i class="fas fa-info-circle"></i>');
+            el.innerHTML = `${icon} <span>${msg}</span>`;
+            box.appendChild(el);
+            setTimeout(() => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateX(20px)';
+                el.style.transition = 'all 0.3s ease';
+                setTimeout(() => el.remove(), 300);
+            }, 3000);
+        };
+
+        function toggleBodyScroll(lock) {
+            document.body.style.overflow = lock ? 'hidden' : '';
+        }
+
+        function startRealtimeSync() {
+            onSnapshot(collection(db, "products"), (snap) => {
+                state.products = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                refreshActiveViewport();
+            }, () => window.toast("     ( )", "info"));
+
+            onSnapshot(collection(db, "customers"), (snap) => {
+                state.customers = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                refreshActiveViewport();
+            });
+
+            onSnapshot(query(collection(db, "transactions"), orderBy("date", "desc")), (snap) => {
+                state.transactions = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                const modalTable = document.getElementById('history-workbench-tbody');
+                if(modalTable) {
+                    const searchInput = document.getElementById('historyWorkbenchSearch');
+                    filterHistoryWorkbenchTable(searchInput ? searchInput.value : '');
+                }
+                refreshActiveViewport();
+            });
+        }
+
+        function refreshActiveViewport() {
+            const route = state.currentRoute;
+            const mount = document.getElementById('main-mount');
+            if (!mount) return;
+
+            let existingLedgerSearch = document.getElementById('ledgerTableSearch')?.value || '';
+            let existingPosSearch = document.getElementById('posCustSearch')?.value || '';
+
+            if (route === '#dashboard') renderDashboardView(mount);
+            else if (route === '#pos') {
+                renderPOSDeliveryView(mount);
+                if (existingPosSearch) {
+                    const inp = document.getElementById('posCustSearch');
+                    if (inp) {
+                        inp.value = existingPosSearch;
+                        inp.dispatchEvent(new Event('input'));
+                    }
+                }
+            }
+            else if (route === '#inventory') renderInventoryView(mount);
+            else if (route === '#ledger') {
+                renderLedgerView(mount);
+                if (existingLedgerSearch) {
+                    const inp = document.getElementById('ledgerTableSearch');
+                    if (inp) {
+                        inp.value = existingLedgerSearch;
+                        inp.dispatchEvent(new Event('input'));
+                    }
+                }
+            }
+            else if (route === '#import') renderImportSupplyView(mount);
+        }
+
+        onAuthStateChanged(auth, (user) => {
+            state.user = user;
+            router();
+            if(user) startRealtimeSync();
+        });
+
+        window.addEventListener('hashchange', () => {
+            state.currentRoute = window.location.hash || '#dashboard';
+            router();
+        });
+
+        function router() {
+            const shell = document.getElementById('app-shell');
+            if (!state.user) {
+                renderLoginGate(shell);
+                return;
+            }
+            
+            const route = state.currentRoute;
+            shell.innerHTML = `
+                <header class="app-header">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <div class="logo"><i class="fas fa-gas-pump"></i></div>
+                        <span style="font-weight:700; font-size:1.05rem; letter-spacing:0.3px;">  </span>
+                    </div>
+                    <div class="header-profile-zone">
+                        <button class="btn btn-danger" id="logoutBtn" style="width:auto; padding:6px 12px; font-size:0.8rem; border-radius:6px; height:34px; background:#ef4444; font-weight:600;"><i class="fas fa-sign-out-alt"></i> </button>
+                    </div>
+                </header>
+                <div class="app-shell-layout">
+                    <aside class="nav-side-bar">
+                        <a href="#dashboard" class="${route === '#dashboard' ? 'active' : ''}"><i class="fas fa-chart-pie"></i>  </a>
+                        <a href="#pos" class="${route === '#pos' ? 'active' : ''}"><i class="fas fa-shipping-fast"></i>   </a>
+                        <a href="#import" class="${route === '#import' ? 'active' : ''}"><i class="fas fa-truck-loading"></i>   </a>
+                        <a href="#inventory" class="${route === '#inventory' ? 'active' : ''}"><i class="fas fa-warehouse"></i>  </a>
+                        <a href="#ledger" class="${route === '#ledger' ? 'active' : ''}"><i class="fas fa-book-open"></i>   </a>
+                    </aside>
+                    <div class="mobile-tabs">
+                        <a href="#dashboard" class="${route === '#dashboard' ? 'active' : ''}"><i class="fas fa-chart-pie"></i></a>
+                        <a href="#pos" class="${route === '#pos' ? 'active' : ''}"><i class="fas fa-shipping-fast"></i></a>
+                        <a href="#import" class="${route === '#import' ? 'active' : ''}"><i class="fas fa-truck-loading"></i></a>
+                        <a href="#inventory" class="${route === '#inventory' ? 'active' : ''}"><i class="fas fa-warehouse"></i></a>
+                        <a href="#ledger" class="${route === '#ledger' ? 'active' : ''}"><i class="fas fa-book-open"></i></a>
+                    </div>
+                    <main class="main-viewport" id="main-mount"></main>
+                </div>
+            `;
+            
+            document.getElementById('logoutBtn').addEventListener('click', () => signOut(auth));
+            refreshActiveViewport();
+        }
+
+        function renderLoginGate(target) {
+            target.innerHTML = `
+                <div style="display:flex; align-items:center; justify-content:center; min-height:100vh; padding:16px; background:#0f172a;">
+                    <div class="card" style="width:100%; max-width:400px; padding:24px; border-radius:18px;">
+                        <div class="text-center" style="margin-bottom:20px;">
+                            <div style="width:54px; height:54px; background:rgba(14, 165, 233, 0.1); border-radius:16px; display:inline-flex; align-items:center; justify-content:center; margin-bottom:12px;">
+                                <i class="fas fa-gas-pump" style="font-size:1.75rem; color:var(--primary);"></i>
+                            </div>
+                            <h2 style="font-weight:700; font-size:1.35rem;">  </h2>
+                        </div>
+                        <div class="form-group">
+                            <label> </label>
+                            <input type="email" id="admEmail" class="input" placeholder="name@example.com">
+                        </div>
+                        <div class="form-group" style="margin-bottom:20px;">
+                            <label></label>
+                            <input type="password" id="admPass" class="input" placeholder="••••••••">
+                        </div>
+                        <button class="btn btn-primary" id="loginBtn" style="padding:12px;"><i class="fas fa-sign-in-alt"></i>  </button>
+                    </div>
+                </div>
+            `;
+            document.getElementById('loginBtn').addEventListener('click', async () => {
+                const em = document.getElementById('admEmail').value.trim();
+                const ps = document.getElementById('admPass').value.trim();
+                if(!em || !ps) return toast("    ", "error");
+                try {
+                    await signInWithEmailAndPassword(auth, em, ps);
+                    toast("  ");
+                } catch(e) {
+                    toast(" : " + e.message, "error");
+                }
+            });
+        }
+
+        // ==========================================
+        // MODULE: DASHBOARD
+        // ==========================================
+        function renderDashboardView(container) {
+            let totalSalesRevenue = 0;
+            let totalCostOfGoodsSold = 0;
+            let totalImportCost = 0;
+
+            state.transactions.forEach(t => {
+                if (t.type === 'sale') {
+                    totalSalesRevenue += (t.totalAmount || 0);
+                    if (t.items) {
+                        t.items.forEach(item => {
+                            const matchedProd = state.products.find(p => p.id === item.id);
+                            const buyRate = matchedProd ? (matchedProd.buyingPrice || 0) : 0;
+                            totalCostOfGoodsSold += (buyRate * (item.qty || 0));
+                        });
+                    }
+                } else if (t.type === 'import') {
+                    totalImportCost += (t.totalCost || 0);
+                }
+            });
+
+            const netProfit = totalSalesRevenue - totalCostOfGoodsSold;
+            const totalCashDue = state.customers.reduce((s, c) => s + (c.totalDue || 0), 0);
+            const totalCylOutInMarket = state.customers.reduce((s, c) => s + (c.cylindersDue || 0), 0);
+            
+            const totalFullInShop = state.products.reduce((s, p) => s + (p.stockFull || 0), 0);
+            const totalEmptyInShop = state.products.reduce((s, p) => s + (p.stockEmpty || 0), 0);
+
+            container.innerHTML = `
+                <div style="margin-bottom:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+                    <div>
+                        <h2 style="font-weight:700; font-size:1.4rem; color:#0f172a;">  </h2>
+                        <p style="color:var(--text-light); font-size:0.88rem;">       </p>
+                    </div>
+                    <button id="openHistoryModalBtn" class="btn btn-warning" style="width:auto; padding:8px 16px; font-size:0.9rem; color:white; font-weight:700; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.25);">
+                        <i class="fas fa-history"></i>    
+                    </button>
+                </div>
+
+                <div class="grid grid-6">
+                    <div class="card" style="margin-bottom:0;">
+                        <div class="stat-card-wrapper">
+                            <div class="stat-icon-box" style="background:#e6f4ea; color:var(--success);"><i class="fa-solid fa-wallet"></i></div>
+                            <div>
+                                <div style="font-size:0.8rem; color:var(--text-light); font-weight:600;">  </div>
+                                <h2 style="font-size:1.25rem; font-weight:700; color:#1f2937; margin:2px 0;">${netProfit.toFixed(2)}</h2>
+                                <span class="badge badge-success"> </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card" style="margin-bottom:0;">
+                        <div class="stat-card-wrapper">
+                            <div class="stat-icon-box" style="background:#fce8e6; color:var(--danger);"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                            <div>
+                                <div style="font-size:0.8rem; color:var(--text-light); font-weight:600;">  </div>
+                                <h2 style="font-size:1.25rem; font-weight:700; color:#1f2937; margin:2px 0;">${totalCashDue}</h2>
+                                <span class="badge badge-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card" style="margin-bottom:0;">
+                        <div class="stat-card-wrapper">
+                            <div class="stat-icon-box" style="background:#fef3c7; color:var(--warning);"><i class="fa-solid fa-boxes-stacked"></i></div>
+                            <div>
+                                <div style="font-size:0.8rem; color:var(--text-light); font-weight:600;"> </div>
+                                <h2 style="font-size:1.25rem; font-weight:700; color:#1f2937; margin:2px 0;">${totalCylOutInMarket}</h2>
+                                <span class="badge badge-warning"> </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card" style="margin-bottom:0;">
+                        <div class="stat-card-wrapper">
+                            <div class="stat-icon-box" style="background:#e0f2fe; color:var(--primary);"><i class="fa-solid fa-truck"></i></div>
+                            <div>
+                                <div style="font-size:0.8rem; color:var(--text-light); font-weight:600;">  </div>
+                                <h2 style="font-size:1.25rem; font-weight:700; color:#1f2937; margin:2px 0;">${totalImportCost}</h2>
+                                <span class="badge badge-info"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card" style="margin-bottom:0; border-left: 3px solid var(--success);">
+                        <div class="stat-card-wrapper">
+                            <div class="stat-icon-box" style="background:#ecfdf5; color:var(--success);"><i class="fa-solid fa-gas-pump"></i></div>
+                            <div>
+                                <div style="font-size:0.8rem; color:var(--text-light); font-weight:600;">  </div>
+                                <h2 style="font-size:1.25rem; font-weight:700; color:#1f2937; margin:2px 0;">${totalFullInShop}</h2>
+                                <span class="badge badge-success"> </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card" style="margin-bottom:0; border-left: 3px solid var(--warning);">
+                        <div class="stat-card-wrapper">
+                            <div class="stat-icon-box" style="background:#fffbeb; color:var(--warning);"><i class="fa-solid fa-circle-dot"></i></div>
+                            <div>
+                                <div style="font-size:0.8rem; color:var(--text-light); font-weight:600;">  </div>
+                                <h2 style="font-size:1.25rem; font-weight:700; color:#1f2937; margin:2px 0;">${totalEmptyInShop}</h2>
+                                <span class="badge badge-warning"> </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('openHistoryModalBtn').addEventListener('click', openTransactionHistoryModal);
+        }
+
+        // ==========================================
+        // MODULE: TRANSACTIONS WORKBENCH MODAL
+        // ==========================================
+        function openTransactionHistoryModal() {
+            toggleBodyScroll(true);
+            const mask = document.createElement('div');
+            mask.className = 'modal-mask';
+            mask.innerHTML = `
+                <div class="modal-box" style="max-width: 1100px; width: 95vw; max-height: 85vh; display: flex; flex-direction: column; border-top: 4px solid var(--primary);">
+                    <div class="modal-head" style="background: #f8fafc;">
+                        <h4 style="font-size:1.05rem; font-weight:700; color:#1e293b;"><i class="fas fa-history text-primary"></i>       </h4>
+                        <button id="closeHistoryModal" style="background:none; border:none; font-size:1.3rem; cursor:pointer; color:var(--danger); display:flex; align-items:center;"><i class="fas fa-times-circle"></i></button>
+                    </div>
+                    <div class="modal-body" style="flex: 1; overflow-y: auto; padding: 16px;">
+                        
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:12px; background: #f1f5f9; padding: 12px; border-radius: 8px;">
+                            <div style="flex: 1; min-width: 260px; display: flex; gap: 8px;">
+                                <input type="text" id="historyWorkbenchSearch" class="input" placeholder=" ,      ..." style="padding:8px 12px; font-size:0.85rem;">
+                                <button id="execHistorySearchBtn" class="btn btn-primary" style="width: auto; padding: 0 16px; height: 38px; white-space: nowrap;"><i class="fas fa-search"></i></button>
+                            </div>
+                            
+                            <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                                <input type="date" id="reportTargetDate" class="input" style="max-width:140px; padding:6px 10px; font-size:0.85rem; height:36px;">
+                                <button id="downloadCSVBtn" class="btn btn-success" style="width:auto; padding:0 14px; font-size:0.85rem; height:36px;"><i class="fa-solid fa-cloud-arrow-down"></i>  </button>
+                            </div>
+                        </div>
+
+                        <div class="responsive-m-table">
+                            <div class="table-container" style="margin-top:0; box-shadow: none;">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th> </th>
+                                            <th> / </th>
+                                            <th> </th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="history-workbench-tbody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            `;
+            document.getElementById('modal-mount').appendChild(mask);
+            
+            const closeModal = () => { mask.remove(); toggleBodyScroll(false); };
+            document.getElementById('closeHistoryModal').addEventListener('click', closeModal);
+            document.getElementById('reportTargetDate').valueAsDate = new Date();
+            document.getElementById('downloadCSVBtn').addEventListener('click', downloadDateWiseCSVReport);
+            
+            const historySearchInput = document.getElementById('historyWorkbenchSearch');
+            const execHistorySearchBtn = document.getElementById('execHistorySearchBtn');
+            
+            historySearchInput.addEventListener('input', () => filterHistoryWorkbenchTable(historySearchInput.value));
+            execHistorySearchBtn.addEventListener('click', () => filterHistoryWorkbenchTable(historySearchInput.value));
+            
+            filterHistoryWorkbenchTable('');
+        }
+
+        window.filterHistoryWorkbenchTable = function(queryStr) {
+            const tbody = document.getElementById('history-workbench-tbody');
+            if(!tbody) return;
+
+            const term = String(queryStr || '').toLowerCase().trim();
+            const filteredRecords = state.transactions.filter(t => {
+                let matchType = (t.type === 'sale' ? ' ' : (t.type === 'import' ? ' ' : ' ')).toLowerCase();
+                
+                let targetCust = state.customers.find(c => c.id === t.customerId);
+                let matchCustomer = String(targetCust?.name || (t.customerId ? ' ' : ' ')).toLowerCase();
+                let matchPhone = String(targetCust?.phone || '').toLowerCase();
+                let matchProduct = String(t.productName || '').toLowerCase();
+                let matchItems = t.items ? t.items.map(i => String(i.name || '')).join(' ').toLowerCase() : '';
+
+                return matchType.includes(term) || 
+                       matchCustomer.includes(term) || 
+                       matchPhone.includes(term) || 
+                       matchProduct.includes(term) ||
+                       matchItems.includes(term);
+            });
+
+            tbody.innerHTML = filteredRecords.map(t => {
+                let typeBadge = '';
+                let detailsText = '';
+                let amt = 0, paid = 0, due = 0;
+
+                if (t.type === 'sale') {
+                    typeBadge = '<span class="badge badge-danger"><i class="fa-solid fa-arrow-up-from-bracket"></i>  </span>';
+                    detailsText = `<strong>${state.customers.find(c => c.id === t.customerId)?.name || ' '}</strong><br><small style="color:var(--text-light);">${t.items?.map(i => i.name + ' ('+i.qty+')').join(', ')}</small>`;
+                    amt = t.totalAmount || 0; paid = t.paidAmount || 0; due = t.dueAmount || 0;
+                } else if (t.type === 'import') {
+                    typeBadge = '<span class="badge badge-info"><i class="fa-solid fa-truck-ramp-box"></i>  </span>';
+                    detailsText = `<strong>${t.productName || ' '}</strong><br><small style="color:var(--text-light);">${t.qty || 0}   | : ${t.containersReturnedToFactory || 0} </small>`;
+                    amt = t.totalCost || 0; paid = t.totalCost || 0; due = 0;
+                } else if (t.type === 'payment') {
+                    typeBadge = '<span class="badge badge-success"><i class="fa-solid fa-hand-holding-dollar"></i>  </span>';
+                    detailsText = `<strong>${state.customers.find(c => c.id === t.customerId)?.name || ''}</strong>    `;
+                    amt = t.totalAmount || 0; paid = t.paidAmount || 0; due = 0;
+                } else if (t.type === 'cylinder_return') {
+                    typeBadge = '<span class="badge badge-warning"><i class="fa-solid fa-recycle"></i>  </span>';
+                    let prod = state.products.find(p => p.id === t.productId);
+                    detailsText = `<strong>${state.customers.find(c => c.id === t.customerId)?.name || ''}</strong><br><small style="color:var(--text-light);">${prod ? prod.name : ''} - ${t.containersReturned || 0} </small>`;
+                    amt = 0; paid = 0; due = 0;
+                }
+
+                return `<tr>
+                    <td data-label=""><span style="color:var(--text-light); font-size:0.82rem; font-weight:500;">${formatDate(t.date)}</span></td>
+                    <td data-label=" ">${typeBadge}</td>
+                    <td data-label=" / ">${detailsText}</td>
+                    <td data-label=" " style="font-weight:600;">${amt}</td>
+                    <td data-label="" class="text-success">${paid}</td>
+                    <td data-label="" class="${due > 0 ? 'text-danger' : ''}">${due}</td>
+                </tr>`;
+            }).join('') || '<tr><td colspan="6" class="text-center" style="padding:24px; color:var(--text-light);">    </td></tr>';
+        }
+
+        window.downloadDateWiseCSVReport = function() {
+            const dateInput = document.getElementById('reportTargetDate').value;
+            if(!dateInput) return window.toast("     ", "error");
+
+            const selectedDateString = new Date(dateInput).toLocaleDateString('bn-BD');
+            const records = state.transactions.filter(t => formatDate(t.date) === selectedDateString);
+
+            if(records.length === 0) {
+                return window.toast(`${selectedDateString}      `, "error");
+            }
+
+            let csvContent = "\ufeff"; 
+            csvContent += ",,/ ,/, , \n";
+
+            records.forEach(r => {
+                let type = r.type === 'sale' ? ' ' : (r.type === 'import' ? ' ' : (r.type === 'cylinder_return' ? ' ' : ' '));
+                let details = '';
+                if(r.type === 'import') {
+                    details = `${r.productName} (${r.qty}  )`;
+                } else if(r.type === 'sale') {
+                    let itemsStr = r.items?.map(i => i.name + 'x' + i.qty).join(' + ') || '';
+                    let cName = state.customers.find(c => c.id === r.customerId)?.name || ' ';
+                    details = `${cName} [${itemsStr}]`;
+                } else if(r.type === 'cylinder_return') {
+                    let cName = state.customers.find(c => c.id === r.customerId)?.name || '';
+                    details = `${cName} (${r.containersReturned}  )`;
+                } else {
+                    details = state.customers.find(c => c.id === r.customerId)?.name || ' ';
+                }
+
+                let amt = r.type === 'import' ? r.totalCost : (r.totalAmount || 0);
+                let paid = r.paidAmount !== undefined ? r.paidAmount : (r.type === 'import' ? r.totalCost : 0);
+                let due = r.dueAmount !== undefined ? r.dueAmount : 0;
+
+                csvContent += `"${formatDate(r.date)}","${type}","${details}","${amt}","${paid}","${due}"\n`;
+            });
+
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `Report_${dateInput}.csv`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.toast("     ");
+        }
+
+        // ==========================================
+        // MODULE: INVENTORY MANAGEMENT
+        // ==========================================
+        function renderInventoryView(container) {
+            container.innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:10px;">
+                    <div>
+                        <h2 style="font-weight:700; font-size:1.4rem;">  </h2>
+                        <p style="color:var(--text-light); font-size:0.88rem;">       </p>
+                    </div>
+                    <button class="btn btn-primary" id="openProdModalBtn" style="width:auto; padding:8px 16px; font-size:0.88rem;"><i class="fas fa-plus"></i>  </button>
+                </div>
+                <div class="card responsive-m-table" style="padding:0; overflow:hidden;">
+                    <div class="table-container" style="margin-top:0; border:none;">
+                        <table>
+                            <thead><tr><th> </th><th></th><th> </th><th> </th><th> </th><th> </th><th style="text-align:center;"></th></tr></thead>
+                            <tbody>
+                                ${state.products.map(p => `
+                                    <tr>
+                                        <td data-label=" "><div style="font-weight:700; color:#1e293b;">${p.name}</div></td>
+                                        <td data-label=""><span style="color:var(--text-light); font-size:0.85rem;">${p.category || 'General'}</span></td>
+                                        <td data-label=" " style="font-weight:500;">${p.buyingPrice || 0}</td>
+                                        <td data-label=" " style="font-weight:600;" class="text-success">${p.price || 0}</td>
+                                        <td data-label=" "><span style="font-weight:700; background:#ecfdf5; color:#059669; padding:4px 10px; border-radius:100px; font-size:0.8rem;">${p.stockFull || 0} </span></td>
+                                        <td data-label=" "><span style="font-weight:700; background:#fffbeb; color:#d97706; padding:4px 10px; border-radius:100px; font-size:0.8rem;">${p.stockEmpty || 0} </span></td>
+                                        <td style="text-align:center;">
+                                            <button class="btn btn-outline edit-p-btn" data-id="${p.id}" style="width:auto; padding:6px 10px; border-radius:6px; font-size:0.8rem; margin-right:4px;"><i class="fas fa-edit" style="color:var(--primary);"></i></button>
+                                            <button class="btn btn-outline del-p-btn" data-id="${p.id}" style="width:auto; padding:6px 10px; border-radius:6px; font-size:0.8rem;"><i class="fas fa-trash" style="color:var(--danger);"></i></button>
+                                        </td>
+                                    </tr>
+                                `).join('') || '<tr><td colspan="7" class="text-center" style="padding:24px; color:var(--text-light);">   </td></tr>'}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('openProdModalBtn').addEventListener('click', () => openProductFormModal());
+            document.querySelectorAll('.edit-p-btn').forEach(b => b.addEventListener('click', (e) => openProductFormModal(e.currentTarget.dataset.id)));
+            document.querySelectorAll('.del-p-btn').forEach(b => b.addEventListener('click', (e) => deleteProductRecord(e.currentTarget.dataset.id)));
+        }
+
+        function openProductFormModal(id = null) {
+            toggleBodyScroll(true);
+            const p = id ? state.products.find(x => x.id === id) : { name: '', category: ' ', buyingPrice: 0, price: 0, stockFull: 0, stockEmpty: 0 };
+            const mask = document.createElement('div');
+            mask.className = 'modal-mask';
+            mask.innerHTML = `
+                <div class="modal-box">
+                    <div class="modal-head">
+                        <h4>${id ? '<i class="fas fa-edit" style="color:var(--primary)"></i>  ' : '<i class="fas fa-plus" style="color:var(--success)"></i>   '}</h4>
+                        <button id="closeModal" style="background:none; border:none; font-size:1.1rem; cursor:pointer; color:var(--text-light);"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group"><label>    (:  )</label><input type="text" id="mName" class="input" value="${p.name}"></div>
+                        <div class="form-group"><label>/</label><input type="text" id="mCat" class="input" value="${p.category}"></div>
+                        <div class="grid grid-2">
+                            <div class="form-group"><label> /   ()</label><input type="number" id="mBuyingPrice" class="input" value="${p.buyingPrice}"></div>
+                            <div class="form-group"><label> /   ()</label><input type="number" id="mPrice" class="input" value="${p.price}"></div>
+                        </div>
+                        <div class="grid grid-2" style="margin-bottom:12px;">
+                            <div class="form-group"><label>   ()</label><input type="number" id="mFull" class="input" value="${p.stockFull}"></div>
+                            <div class="form-group"><label>   ()</label><input type="number" id="mEmpty" class="input" value="${p.stockEmpty}"></div>
+                        </div>
+                        <button class="btn btn-primary" id="saveProd" style="padding:12px;"><i class="fas fa-save"></i>   </button>
+                    </div>
+                </div>
+            `;
+            document.getElementById('modal-mount').appendChild(mask);
+            
+            const closeModal = () => { mask.remove(); toggleBodyScroll(false); };
+            document.getElementById('closeModal').addEventListener('click', closeModal);
+            
+            document.getElementById('saveProd').addEventListener('click', async () => {
+                const data = {
+                    name: document.getElementById('mName').value.trim(),
+                    category: document.getElementById('mCat').value.trim(),
+                    buyingPrice: Number(document.getElementById('mBuyingPrice').value) || 0,
+                    price: Number(document.getElementById('mPrice').value) || 0,
+                    stockFull: Math.max(0, parseInt(document.getElementById('mFull').value) || 0),
+                    stockEmpty: Math.max(0, parseInt(document.getElementById('mEmpty').value) || 0)
+                };
+                if(!data.name) return toast("  ", "error");
+                try {
+                    if(id) {
+                        await updateDoc(doc(db, "products", id), data);
+                        toast("   ");
+                    } else {
+                        await addDoc(collection(db, "products"), data);
+                        toast("    ");
+                    }
+                    closeModal();
+                } catch(e) {
+                    toast(": " + e.message, "error");
+                }
+            });
+        }
+
+        async function deleteProductRecord(id) {
+            if(confirm("       ?")) {
+                try {
+                    await deleteDoc(doc(db, "products", id));
+                    toast("   ", "error");
+                } catch(e) {
+                    toast("  : " + e.message, "error");
+                }
+            }
+        }
+
+        // ==========================================
+        // MODULE: FACTORY IMPORT LOGISTICS
+        // ==========================================
+        function renderImportSupplyView(container) {
+            container.innerHTML = `
+                <div style="margin-bottom:20px;">
+                    <h2 style="font-weight:700; font-size:1.4rem;">   </h2>
+                    <p style="color:var(--text-light); font-size:0.88rem;">          </p>
+                </div>
+                <div class="card" style="max-width: 600px;">
+                    <div class="form-group">
+                        <label>    </label>
+                        <select id="impProdId" class="input">
+                            ${state.products.map(p => `<option value="${p.id}">${p.name} (  : ${p.stockEmpty || 0} )</option>`).join('')}
+                        </select>
+                    </div>
+                    <div class="grid grid-2">
+                        <div class="form-group"><label>    ()</label><input type="number" id="impQty" class="input" value="10" min="0"></div>
+                        <div class="form-group"><label>    ()</label><input type="number" id="impCylReturned" class="input" value="10" min="0"></div>
+                    </div>
+                    <div class="form-group" style="margin-bottom:20px;"><label>   /    ()</label><input type="number" id="impCost" class="input" placeholder="  "></div>
+                    <button class="btn btn-primary" id="submitImportBtn" style="padding:12px;"><i class="fas fa-truck-loading"></i>   </button>
+                </div>
+            `;
+
+            document.getElementById('submitImportBtn').addEventListener('click', async () => {
+                const pId = document.getElementById('impProdId').value;
+                const qty = parseInt(document.getElementById('impQty').value) || 0;
+                const cylReturned = parseInt(document.getElementById('impCylReturned').value) || 0;
+                const cost = Number(document.getElementById('impCost').value) || 0;
+
+                if(!pId || qty < 0 || cost <= 0) return toast("         ", "error");
+                
+                const pObj = state.products.find(x => x.id === pId);
+                if (pObj && pObj.stockEmpty < cylReturned) {
+                    return toast(`:   ${pObj.stockEmpty}           `, "error");
+                }
+
+                try {
+                    const batch = writeBatch(db);
+                    const txnRef = doc(collection(db, "transactions"));
+
+                    batch.set(txnRef, {
+                        type: 'import', productId: pId, productName: pObj ? pObj.name : '', qty: qty, containersReturnedToFactory: cylReturned, totalCost: cost, date: new Date() 
+                    });
+
+                    batch.update(doc(db, "products", pId), {
+                        stockFull: increment(qty),
+                        stockEmpty: increment(-cylReturned)
+                    });
+
+                    await batch.commit();
+                    toast("      ");
+                    document.getElementById('impCost').value = '';
+                    refreshActiveViewport();
+                } catch(e) {
+                    toast(": " + e.message, "error");
+                }
+            });
+        }
+
+        // ==========================================
+        // MODULE: SALES DELIVERY & WORKBENCH
+        // ==========================================
+        function renderPOSDeliveryView(container) {
+            state.cart = [];
+            container.innerHTML = `
+                <div style="margin-bottom:16px;">
+                    <h2 style="font-weight:700; font-size:1.4rem;">  </h2>
+                    <p style="color:var(--text-light); font-size:0.88rem;"> ,  -      </p>
+                </div>
+
+                <div class="card" style="border-top: 4px solid var(--primary); padding: 20px;">
+                    <div class="pos-workbench-grid">
+                        
+                        <div>
+                            <h3 style="font-size:0.95rem; font-weight:700; margin-bottom:12px; color:#1e293b;"><i class="fas fa-sliders-h"></i> .    </h3>
+                            
+                            <div class="form-group">
+                                <label>  </label>
+                                <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                                    <input type="text" id="posCustSearch" class="input" placeholder="     ..." style="font-size:0.85rem;">
+                                    <button id="posSearchBtn" class="btn btn-primary" style="width: auto; padding: 0 14px;"><i class="fas fa-search"></i></button>
+                                </div>
+                                <select id="posCustId" class="input" style="font-weight:600;">
+                                    <option value="">--  /   ( ) --</option>
+                                    ${state.customers.map(c => `<option value="${c.id}">${c.name} (: ${c.totalDue || 0} | : ${c.cylindersDue || 0})</option>`).join('')}
+                                </select>
+                            </div>
+
+                            <div style="background: #f1f5f9; padding: 14px; border-radius: 8px; margin-bottom: 12px; border: 1px dashed #cbd5e1;">
+                                <h4 style="font-size: 0.85rem; font-weight:700; color: #475569; margin-bottom:8px;"><i class="fas fa-cart-plus text-success"></i> .   </h4>
+                                <div class="grid grid-2">
+                                    <div class="form-group" style="margin-bottom:0;">
+                                        <label> (Qty)</label>
+                                        <input type="number" id="posProdQty" class="input" value="1" min="1" style="font-weight:700; text-align:center;">
+                                    </div>
+                                    <div class="form-group" style="margin-bottom:0;">
+                                        <label>  </label>
+                                        <select id="posProdSelect" class="input" style="font-weight:700; border-color: var(--success);">
+                                            <option value="">--  --</option>
+                                            ${state.products.map(p => `<option value="${p.id}" ${p.stockFull <= 0 ? 'disabled' : ''}>${p.name} (${p.price})</option>`).join('')}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="background:#fffbeb; padding:12px; border-radius:8px; border:1px solid #fde68a;">
+                                <label style="color:#b45309; font-weight:700; font-size:0.82rem; display:flex; align-items:center; gap:4px;"><i class="fas fa-recycle"></i>    </label>
+                                <input type="number" id="posCylExchanged" class="input" style="padding:8px; border-color:#f59e0b; font-weight:700;" value="0" min="0">
+                            </div>
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; justify-content: space-between; border-left:1px solid var(--border); padding-left:20px; max-width:100%;">
+                            <div>
+                                <h3 style="font-size:0.95rem; font-weight:700; margin-bottom:12px; color:#1e293b;"><i class="fas fa-receipt"></i> .   </h3>
+                                <div class="cart-list" id="pos-cart-mount"></div>
+                            </div>
+
+                            <div style="border-top: 1px solid var(--border); padding-top:12px;">
+                                <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-weight:700; font-size:1.2rem; color:#0f172a;">
+                                    <span>  :</span><span id="pos-total-bill" style="color:var(--primary)">0</span>
+                                </div>
+                                
+                                <div class="grid grid-2" style="align-items: center; gap: 10px; margin-bottom:12px;">
+                                    <div class="form-group" style="margin-bottom:0;">
+                                        <label> </label>
+                                        <select id="posPayStatus" class="input" style="font-weight:600;">
+                                            <option value="paid">Full Paid ( )</option>
+                                            <option value="due">Full Due ( )</option>
+                                            <option value="partial">Partial ( )</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group hidden" id="posPartialInputGroup" style="margin-bottom:0;">
+                                        <label>  ()</label>
+                                        <input type="number" id="posCollectedAmt" class="input" value="0" min="0" style="border-color:var(--primary); font-weight:700;">
+                                    </div>
+                                </div>
+                                <button class="btn btn-success" id="posSubmitBtn" style="font-size:0.95rem; padding:12px;"><i class="fas fa-check-circle"></i>     </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            `;
+
+            if(window.innerWidth <= 1100) {
+                const rightCol = container.querySelector('.pos-workbench-grid > div:last-child');
+                if(rightCol) {
+                    rightCol.style.borderLeft = 'none';
+                    rightCol.style.paddingLeft = '0';
+                    rightCol.style.borderTop = '1px dashed var(--border)';
+                    rightCol.style.paddingTop = '16px';
+                }
+            }
+
+            const filterCustomerList = () => {
+                const searchInp = document.getElementById('posCustSearch');
+                if(!searchInp) return;
+                const term = searchInp.value.toLowerCase().trim();
+                const select = document.getElementById('posCustId');
+                
+                const filtered = state.customers.filter(c => {
+                    const name = String(c.name || '').toLowerCase();
+                    const phone = String(c.phone || '').toLowerCase();
+                    return name.includes(term) || phone.includes(term);
+                });
+                
+                select.innerHTML = `<option value="">--  /   ( ) --</option>` + 
+                    filtered.map(c => `<option value="${c.id}">${c.name} (: ${c.totalDue || 0} | : ${c.cylindersDue || 0})</option>`).join('');
+            };
+
+            document.getElementById('posCustSearch').addEventListener('input', filterCustomerList);
+            document.getElementById('posSearchBtn').addEventListener('click', filterCustomerList);
+
+            document.getElementById('posProdSelect').addEventListener('change', (e) => {
+                const pId = e.target.value;
+                if(!pId) return; 
+                const qty = parseInt(document.getElementById('posProdQty').value) || 1;
+                if(qty <= 0) { e.target.value = ''; return toast("   ", "error"); }
+                addItemToCartWithQty(pId, qty);
+                e.target.value = '';
+            });
+
+            document.getElementById('posPayStatus').addEventListener('change', (e) => {
+                document.getElementById('posPartialInputGroup').classList.toggle('hidden', e.target.value !== 'partial');
+            });
+            
+            document.getElementById('posSubmitBtn').addEventListener('click', executePOSDeliveryCheckout);
+            updatePOSCartUI();
+        }
+
+        function addItemToCartWithQty(id, qty) {
+            const p = state.products.find(x => x.id === id);
+            if(!p) return;
+            if(p.stockFull <= 0) return toast("!     ", "error");
+
+            const existing = state.cart.find(i => i.id === id);
+            if(existing) {
+                if((existing.qty + qty) > p.stockFull) return toast(`     ( : ${p.stockFull} )`, "error");
+                existing.qty += qty;
+            } else {
+                if(qty > p.stockFull) return toast(`     ( : ${p.stockFull} )`, "error");
+                state.cart.push({ id: p.id, name: p.name, price: p.price, qty: qty });
+            }
+            updatePOSCartUI();
+            toast(`${p.name}   `);
+            document.getElementById('posProdQty').value = 1;
+        }
+
+        function updatePOSCartUI() {
+            const mount = document.getElementById('pos-cart-mount');
+            if(!mount) return;
+            let total = 0, totalCylCount = 0;
+            mount.innerHTML = state.cart.map(i => {
+                total += (i.price * i.qty); totalCylCount += i.qty;
+                return `<div class="cart-item">
+                    <div>
+                        <div style="font-weight:700; color:#1e293b; font-size:0.88rem;">${i.name}</div>
+                        <small class="text-success" style="font-weight:600;">${i.price} x ${i.qty} </small>
+                    </div>
+                    <button class="btn btn-danger remove-cart-btn" data-id="${i.id}" style="width:auto; padding:4px 8px; border-radius:6px; font-size:0.75rem;"><i class="fas fa-trash-alt"></i></button>
+                </div>`;
+            }).join('') || '<div class="text-center" style="color:var(--text-light); padding:30px 10px;"><p style="font-size:0.85rem;">     </p></div>';
+
+            document.getElementById('pos-total-bill').innerText = `${total}`;
+            const cylExchangeField = document.getElementById('posCylExchanged');
+            if(cylExchangeField) cylExchangeField.value = totalCylCount;
+
+            document.querySelectorAll('.remove-cart-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    state.cart = state.cart.filter(x => x.id !== e.currentTarget.dataset.id);
+                    updatePOSCartUI();
+                });
+            });
+        }
+
+        async function executePOSDeliveryCheckout() {
+            if(state.cart.length === 0) return toast(" !   ", "error");
+            
+            const custId = document.getElementById('posCustId').value;
+            const payStatus = document.getElementById('posPayStatus').value;
+            const totalBill = state.cart.reduce((s, i) => s + (i.price * i.qty), 0);
+            const totalCylDelivered = state.cart.reduce((s, i) => s + i.qty, 0);
+            const emptyCylReturnedNow = parseInt(document.getElementById('posCylExchanged').value) || 0;
+
+            let paidAmt = totalBill;
+            if(payStatus === 'due') paidAmt = 0;
+            if(payStatus === 'partial') paidAmt = Number(document.getElementById('posCollectedAmt').value) || 0;
+
+            if(paidAmt < 0 || paidAmt > totalBill) return toast("    ", "error");
+            
+            const dueAmt = totalBill - paidAmt;
+            const netCylinderDebt = totalCylDelivered - emptyCylReturnedNow;
+            const custObj = state.customers.find(c => c.id === custId);
+            const customerName = custObj ? custObj.name : ' ';
+
+            try {
+                const batch = writeBatch(db);
+                const txnRef = doc(collection(db, "transactions"));
+                const invoiceData = {
+                    customerId: custId || null, date: new Date(), type: 'sale', totalAmount: totalBill, paidAmount: paidAmt, dueAmount: dueAmt, cylindersDelivered: totalCylDelivered, containersReturned: emptyCylReturnedNow, items: state.cart
+                };
+
+                batch.set(txnRef, invoiceData);
+
+                let remainingEmptyReturns = emptyCylReturnedNow;
+                state.cart.forEach(item => {
+                    const pRef = doc(db, "products", item.id);
+                    let currentItemReturnQty = Math.min(remainingEmptyReturns, item.qty);
+                    remainingEmptyReturns -= currentItemReturnQty;
+
+                    batch.update(pRef, { 
+                        stockFull: increment(-item.qty),
+                        stockEmpty: increment(currentItemReturnQty)
+                    });
+                });
+
+                if (remainingEmptyReturns > 0 && state.cart.length > 0) {
+                    batch.update(doc(db, "products", state.cart[0].id), { stockEmpty: increment(remainingEmptyReturns) });
+                }
+
+                if (custId) {
+                    batch.update(doc(db, "customers", custId), { 
+                        totalDue: increment(dueAmt), cylindersDue: increment(netCylinderDebt)
+                    });
+                }
+
+                await batch.commit();
+                toast("   !");
+                openInvoicePrintModal(customerName, invoiceData);
+                state.cart = [];
+                refreshActiveViewport();
+            } catch (e) {
+                toast("   : " + e.message, "error");
+            }
+        }
+
+        function openInvoicePrintModal(customerName, inv) {
+            toggleBodyScroll(true);
+            const mask = document.createElement('div');
+            mask.className = 'modal-mask';
+            mask.innerHTML = `
+                <div class="modal-box" style="max-width:380px;">
+                    <div class="modal-head"><h4><i class="fas fa-receipt"></i>  </h4></div>
+                    <div class="modal-body" id="printable-area" style="color:#000; padding:10px; background:#fff;">
+                        <div class="text-center" style="border-bottom:2px dashed #000; padding-bottom:8px; margin-bottom:8px;">
+                            <h3 style="margin:0; font-size:1.15rem; font-weight:700;">  </h3>
+                            <p style="font-size:0.75rem;">: ${new Date().toLocaleDateString('bn-BD')}</p>
+                        </div>
+                        <p style="font-size:0.85rem; margin-bottom:4px;"><strong>:</strong> ${customerName}</p>
+                        <table style="width:100%; border-collapse:collapse; font-size:0.8rem;">
+                            <thead>
+                                <th style="border-bottom:1px solid #000; text-align:left;"></th>
+                                <th style="border-bottom:1px solid #000; text-align:center;">Qty</th>
+                                <th style="border-bottom:1px solid #000; text-align:right;"></th>
+                            </thead>
+                            <tbody>
+                                ${inv.items.map(i => `<tr><td>${i.name}</td><td style="text-align:center;">${i.qty}</td><td style="text-align:right;">${i.price * i.qty}</td></tr>`).join('')}
+                            </tbody>
+                        </table>
+                        <div style="text-align:right; font-size:0.85rem; font-weight:600; margin-top:6px;">
+                            <div> : ${inv.totalAmount}</div>
+                            <div> : ${inv.paidAmount}</div>
+                            <div style="color:red;">: ${inv.dueAmount}</div>
+                            <div style="border-top:1px solid #000; margin-top:2px; font-size:0.75rem;"> : ${inv.containersReturned} </div>
+                        </div>
+                    </div>
+                    <div style="padding:12px 20px; display:flex; gap:8px;">
+                        <button class="btn btn-primary" id="realPrintTrigger"><i class="fas fa-print"></i> </button>
+                        <button class="btn btn-outline" id="closePrintModal"></button>
+                    </div>
+                </div>
+            `;
+            document.getElementById('modal-mount').appendChild(mask);
+            
+            const closeModal = () => { mask.remove(); toggleBodyScroll(false); };
+            document.getElementById('closePrintModal').addEventListener('click', closeModal);
+            document.getElementById('realPrintTrigger').addEventListener('click', () => window.print());
+        }
+
+        // ==========================================
+        // MODULE: CUSTOMER KHATABOOK / LEDGER
+        // ==========================================
+        function renderLedgerView(container) {
+            container.innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:10px;">
+                    <div>
+                        <h2 style="font-weight:700; font-size:1.4rem;">  </h2>
+                        <p style="color:var(--text-light); font-size:0.88rem;">         </p>
+                    </div>
+                    <button class="btn btn-primary" id="openCustModalBtn" style="width:auto; padding:8px 16px; font-size:0.88rem;"><i class="fas fa-user-plus"></i>  </button>
+                </div>
+                
+                <div class="form-group" style="max-width: 460px; margin-bottom: 16px; display: flex; gap: 8px;">
+                    <input type="text" id="ledgerTableSearch" class="input" placeholder="      ...">
+                    <button id="execLedgerSearchBtn" class="btn btn-primary" style="width: auto; padding: 0 16px;"><i class="fas fa-search"></i></button>
+                </div>
+
+                <div class="card responsive-m-table" style="padding:0; overflow:hidden;">
+                    <div class="table-container" style="margin-top:0; border:none;">
+                        <table>
+                            <thead><tr><th>/</th><th> </th><th></th><th> </th><th> </th><th style="text-align:center;"> </th></tr></thead>
+                            <tbody id="ledger-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+
+            function populateLedgerRows(customerArray) {
+                const tbody = document.getElementById('ledger-tbody');
+                if(!tbody) return;
+                tbody.innerHTML = customerArray.map(c => `
+                    <tr>
+                        <td data-label=" "><div style="font-weight:700; color:#1e293b;">${c.name || ''}</div></td>
+                        <td data-label=" "><span style="color:var(--text-light); font-weight:500;">${c.phone || 'N/A'}</span></td>
+                        <td data-label=""><span style="color:var(--text-light); font-size:0.85rem;">${c.address || 'N/A'}</span></td>
+                        <td data-label=" "><span style="font-weight:700;" class="${c.totalDue > 0 ? 'text-danger' : 'text-success'}">${c.totalDue || 0}</span></td>
+                        <td data-label=" "><span class="badge ${c.cylindersDue > 0 ? 'badge-warning' : 'badge-success'}">${c.cylindersDue || 0}  </span></td>
+                        <td style="text-align:center;">
+                            <button class="btn btn-success cash-col-btn" data-id="${c.id}" style="width:auto; padding:6px 12px; font-size:0.8rem; margin-right:4px;"><i class="fas fa-money-bill-wave"></i> </button>
+                            <button class="btn btn-warning cyl-col-btn" data-id="${c.id}" style="width:auto; padding:6px 12px; font-size:0.8rem; color:white;"><i class="fas fa-recycle"></i> </button>
+                        </td>
+                    </tr>
+                `).join('') || '<tr><td colspan="6" class="text-center" style="padding:20px; color:var(--text-light);">    </td></tr>';
+                
+                bindLedgerActionButtons();
+            }
+
+            function bindLedgerActionButtons() {
+                document.querySelectorAll('.cash-col-btn').forEach(b => b.addEventListener('click', (e) => openCashCollectionModal(e.currentTarget.dataset.id)));
+                document.querySelectorAll('.cyl-col-btn').forEach(b => b.addEventListener('click', (e) => openCylinderReturnOnlyModal(e.currentTarget.dataset.id)));
+            }
+
+            populateLedgerRows(state.customers);
+
+            const execFilter = () => {
+                const searchInput = document.getElementById('ledgerTableSearch');
+                if(!searchInput) return;
+                const queryVal = searchInput.value.toLowerCase().trim();
+                
+                const filteredList = state.customers.filter(c => {
+                    const name = String(c.name || '').toLowerCase();
+                    const phone = String(c.phone || '').toLowerCase();
+                    const address = String(c.address || '').toLowerCase();
+                    return name.includes(queryVal) || phone.includes(queryVal) || address.includes(queryVal);
+                });
+                populateLedgerRows(filteredList);
+            };
+
+            document.getElementById('ledgerTableSearch').addEventListener('input', execFilter);
+            document.getElementById('execLedgerSearchBtn').addEventListener('click', execFilter);
+            document.getElementById('openCustModalBtn').addEventListener('click', openCustomerCreateModal);
+        }
+
+        function openCustomerCreateModal() {
+            toggleBodyScroll(true);
+            const mask = document.createElement('div');
+            mask.className = 'modal-mask';
+            mask.innerHTML = `
+                <div class="modal-box">
+                    <div class="modal-head"><h4><i class="fas fa-user-plus"></i>   </h4><button id="closeCModal" style="background:none; border:none; font-size:1.1rem; cursor:pointer;"><i class="fas fa-times"></i></button></div>
+                    <div class="modal-body">
+                        <div class="form-group"><label>/ </label><input type="text" id="custName" class="input"></div>
+                        <div class="form-group"><label> </label><input type="tel" id="custPhone" class="input"></div>
+                        <div class="form-group" style="margin-bottom:16px;"><label></label><input type="text" id="custAddr" class="input"></div>
+                        <button class="btn btn-primary" id="saveCust"><i class="fas fa-check"></i>   </button>
+                    </div>
+                </div>
+            `;
+            document.getElementById('modal-mount').appendChild(mask);
+            
+            const closeModal = () => { mask.remove(); toggleBodyScroll(false); };
+            document.getElementById('closeCModal').addEventListener('click', closeModal);
+            
+            document.getElementById('saveCust').addEventListener('click', async () => {
+                const name = document.getElementById('custName').value.trim();
+                const phone = document.getElementById('custPhone').value.trim();
+                if(!name || !phone) return toast("    ", "error");
+
+                try {
+                    await addDoc(collection(db, "customers"), {
+                        name: name, phone: phone, address: document.getElementById('custAddr').value.trim(), totalDue: 0, cylindersDue: 0
+                    });
+                    toast("   ");
+                    closeModal();
+                } catch(e) {
+                    toast(": " + e.message, "error");
+                }
+            });
+        }
+
+        function openCashCollectionModal(id) {
+            toggleBodyScroll(true);
+            const c = state.customers.find(x => x.id === id);
+            const mask = document.createElement('div');
+            mask.className = 'modal-mask';
+            mask.innerHTML = `
+                <div class="modal-box">
+                    <div class="modal-head"><h4><i class="fas fa-money-bill-wave"></i>    </h4><button id="closePayM" style="background:none; border:none; cursor:pointer; font-size:1.1rem;"><i class="fas fa-times"></i></button></div>
+                    <div class="modal-body">
+                        <div style="background:#f8fafc; padding:10px; border-radius:8px; margin-bottom:12px; border:1px solid var(--border);">
+                            <p style="font-size:0.9rem;">: <strong>${c.name}</strong></p>
+                            <p style="font-size:0.9rem; margin-top:2px;"> : <strong class="text-danger">${c.totalDue || 0}</strong></p>
+                        </div>
+                        <div class="form-group" style="margin-bottom:16px;"><label>   ()</label><input type="number" id="collectAmt" class="input" min="1"></div>
+                        <button class="btn btn-success" id="submitPayment"><i class="fas fa-save"></i>   </button>
+                    </div>
+                </div>
+            `;
+            document.getElementById('modal-mount').appendChild(mask);
+            
+            const closeModal = () => { mask.remove(); toggleBodyScroll(false); };
+            document.getElementById('closePayM').addEventListener('click', closeModal);
+            
+            document.getElementById('submitPayment').addEventListener('click', async () => {
+                const amt = Number(document.getElementById('collectAmt').value) || 0;
+                if(amt <= 0) return toast("   ", "error");
+
+                try {
+                    const batch = writeBatch(db);
+                    const txnRef = doc(collection(db, "transactions"));
+
+                    batch.set(txnRef, {
+                        customerId: id, date: new Date(), type: "payment", totalAmount: amt, paidAmount: amt, dueAmount: 0, items: []
+                    });
+                    batch.update(doc(db, "customers", id), { totalDue: increment(-amt) });
+
+                    await batch.commit();
+                    toast("     ");
+                    closeModal();
+                    refreshActiveViewport();
+                } catch(e) {
+                    toast(": " + e.message, "error");
+                }
+            });
+        }
+
+        function openCylinderReturnOnlyModal(id) {
+            toggleBodyScroll(true);
+            const c = state.customers.find(x => x.id === id);
+            const mask = document.createElement('div');
+            mask.className = 'modal-mask';
+            mask.innerHTML = `
+                <div class="modal-box">
+                    <div class="modal-head"><h4><i class="fas fa-recycle"></i>    </h4><button id="closeCylM" style="background:none; border:none; cursor:pointer; font-size:1.1rem;"><i class="fas fa-times"></i></button></div>
+                    <div class="modal-body">
+                        <div style="background:#f8fafc; padding:10px; border-radius:8px; margin-bottom:12px; border:1px solid var(--border);">
+                            <p style="font-size:0.9rem;">: <strong>${c.name}</strong></p>
+                            <p style="font-size:0.9rem; margin-top:2px;">  : <strong class="text-warning">${c.cylindersDue || 0} </strong></p>
+                        </div>
+                        <div class="form-group">
+                            <label>     ?</label>
+                            <select id="retProdId" class="input">
+                                ${state.products.map(p => `<option value="${p.id}">${p.name}</option>`).join('')}
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin-bottom:16px;"><label>    ()</label><input type="number" id="retQty" class="input" value="1" min="1"></div>
+                        <button class="btn btn-warning" id="submitCylReturn" style="color:white;"><i class="fas fa-save"></i>    </button>
+                    </div>
+                </div>
+            `;
+            document.getElementById('modal-mount').appendChild(mask);
+            
+            const closeModal = () => { mask.remove(); toggleBodyScroll(false); };
+            document.getElementById('closeCylM').addEventListener('click', closeModal);
+            
+            document.getElementById('submitCylReturn').addEventListener('click', async () => {
+                const pId = document.getElementById('retProdId').value;
+                const qty = parseInt(document.getElementById('retQty').value) || 0;
+                
+                if(!pId || qty <= 0) return toast("      ", "error");
+
+                try {
+                    const batch = writeBatch(db);
+                    const txnRef = doc(collection(db, "transactions"));
+
+                    batch.set(txnRef, {
+                        customerId: id,
+                        productId: pId,
+                        date: new Date(),
+                        type: "cylinder_return",
+                        containersReturned: qty,
+                        totalAmount: 0,
+                        paidAmount: 0,
+                        dueAmount: 0
+                    });
+
+                    batch.update(doc(db, "products", pId), {
+                        stockEmpty: increment(qty)
+                    });
+
+                    batch.update(doc(db, "customers", id), {
+                        cylindersDue: increment(-qty)
+                    });
+
+                    await batch.commit();
+                    toast("     ");
+                    closeModal();
+                    refreshActiveViewport();
+                } catch(e) {
+                    toast(": " + e.message, "error");
+                }
+            });
+        }
+    </script>
+</body>
+</html>
